@@ -1,0 +1,60 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #719191;
+  height: 100%;
+}
+
+.main-menu {
+  max-width: 70px;
+  height: 100%;
+  position: fixed;
+  margin: 0;
+}
+
+.wrapper {
+  background-color: #fafafa;
+  border-radius: 20px;
+  margin-left: 60px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 25px;
+}
+.wrapper .header .container {
+  display: flex;
+  justify-content: space-between;
+}
+.wrapper .header .container .head-logo-search {
+  display: flex;
+  align-items: center;
+  width: 60%;
+  justify-content: space-between;
+}
+.wrapper .header .container .head-logo-search .search {
+  background-color: #eaf1f1;
+  width: 450px;
+  border-radius: 32px;
+  padding: 0 35px;
+  box-sizing: border-box;
+}
+.wrapper .header .container .head-logo-search .search input[name=search] {
+  height: 35px;
+  border: none;
+  outline: none;
+  background-color: #eaf1f1;
+  width: 100%;
+}
+.wrapper .main-content {
+  flex: 1 1 auto;
+}
+.wrapper .main-content .content .hidden {
+  display: none;
+}
+
+.container {
+  max-width: 95%;
+  margin: 0 auto;
+}/*# sourceMappingURL=main.css.map */
