@@ -3,6 +3,7 @@ const Ajv = require('ajv');
 const multer = require('multer');
 const path = require('path');
 const router = express.Router();
+
 const taskController = require('../controllers/taskController');
 
 const ajv = new Ajv();
@@ -15,6 +16,21 @@ router.get('/', (req, res) => {
 });
 
 router.get('/list', async(req, res) => {
+    const taskList = await taskController.getAllTasks();
+    res.json(taskList);
+});
+
+router.post('/change', async(req, res) => {
+    const data = req.body;
+    console.log(data);
+    await taskController.updateTask(data);
+    const taskList = await taskController.getAllTasks();
+    res.json(taskList);
+});
+
+router.post('/delete', async(req, res) => {
+    const id = req.body.id;
+    await taskController.deleteTask(id);
     const taskList = await taskController.getAllTasks();
     res.json(taskList);
 });
