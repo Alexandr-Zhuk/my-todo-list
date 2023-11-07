@@ -6,6 +6,10 @@ const taskInput = document.querySelector('input[name="taskName"]');
 const categoryList = document.querySelector('.category-list');
 const priorityList = document.querySelector('.priority-list');
 const categoryFilterList = document.querySelector('.category-filter-list');
+const priorityFilterList = document.querySelector('.priority-filter-list');
+const headerTask = document.querySelector('.task-header');
+
+let categList = '';
 
 const renderTasks = (data) => {
     console.log(data.data);
@@ -47,6 +51,28 @@ const renderTasks = (data) => {
     tasksList.innerHTML = html;
 };
 
+let currentHeader = '';
+
+const getHeader = () => {
+    const currentCat = window.location.search;
+    if(!currentCat){
+        currentHeader = 'Все задачи';
+    }else{
+        curentCat = currentCat.replace('?', "");
+        const spl = curentCat.split('=');
+        
+        if(spl[0] === 'category'){
+            console.log(categList);
+        }
+    }
+
+    
+        
+    
+}
+
+
+
 const renderCategories = (data) => {
     let html = '<option value="" disabled selected>Выберите категорию</option>';
     data.data.forEach(item => html = html + `<option value="${item._id}">${item.categoryName}</option>`);
@@ -60,20 +86,34 @@ const renderPriorities = (data) => {
 };
 
 const renderFilterCategories = (data) => {
+    
     let html = '';
-    data.data.forEach(item => html += `<li data-id="${item._id}" class="category-filter-item"><a href="#">${item.categoryName}</a></li>`);
+    data.data.forEach(item => html += 
+        `<li data-id="${item._id}" class="category-filter-item">
+            <a href="/tasks?category=${item._id}">${item.categoryName}</a>
+        </li>`);
     categoryFilterList.innerHTML = html;
 };
 
+const renderFilterPriorities = (data) => {
+    let html = '';
+    data.data.forEach(item => html += 
+        `<li data-id="${item._id}" class="priority-filter-item">
+            <a href="/tasks?priority=${item._id}">${item.priority}</a>
+        </li>`);
+    priorityFilterList.innerHTML = html;
+};
+
 const getTasks = async() => {
-    const data = await axios.get('/tasks/list');
+    const getParams = window.location.search;
+    const data = await axios.get('/tasks/list' + getParams);
     renderTasks(data);
 };
 
 const addTask = async(ev) => {
     ev.preventDefault();
     const formData = new FormData(ev.target); 
-    const taskList = await axios.post('/tasks/add', formData);
+    const taskList = await axios.post('/tasks/add' + window.location.search, formData);
     renderTasks(taskList);
     taskInput.value = '';
 }
@@ -95,23 +135,24 @@ const changeStatus = async(id, item) => {
 };
 
 const getCategories = async() => {
-    const categList = await axios.get('/category/list');
+    categList = await axios.get('/category/list');
     renderCategories(categList);
     renderFilterCategories(categList);
 };
 
 getCategories();
-
+getHeader();
 const getPriorities = async() => {
     const priorList = await axios.get('/priority/list');
     renderPriorities(priorList);
+    renderFilterPriorities(priorList);
 };
 
 getPriorities();
 
 const deleteTask = async(id) => {
     const data = {id: id};
-    const taskList = await axios.post('/tasks/delete', data);
+    const taskList = await axios.post('/tasks/delete' + window.location.search, data);
     renderTasks(taskList);
 };
 
@@ -137,5 +178,7 @@ tasksList.addEventListener('click', (ev) => {
         deleteTask(id);
     }
 });
+
+headerTask.innerHTML = currentHeader;
 
 addTaskForm.addEventListener('submit', addTask);

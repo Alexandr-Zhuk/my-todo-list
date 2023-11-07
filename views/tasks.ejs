@@ -35,6 +35,22 @@
         <div class="main-content">
             <div class="container">
                 <div class="left-sidebar">
+                    <div class="general-filter">
+                        <div class="general-filter-list">
+                            <li class="general-filter-item">
+                                <a href="/tasks">Все задачи</a>
+                            </li>
+                            <li class="general-filter-item">
+                                <a href="/tasks?date=today">На сегодня</a>
+                            </li>
+                            <li class="general-filter-item">
+                                <a href="/tasks?date=future">Предстоящие</a>
+                            </li>
+                            <li class="general-filter-item">
+                                <a href="/tasks?date=previous">Просроченные</a>
+                            </li>
+                        </div>
+                    </div>
                     <div class="category-filter">
                         <div class="category-filter-head">
                             Категории:
@@ -43,8 +59,19 @@
 
                         </div>
                     </div>
+                    <div class="priority-filter">
+                        <div class="priority-filter-head">
+                            Приоритетность:
+                        </div>
+                        <div class="priority-filter-list">
+
+                        </div>
+                    </div>
                 </div>
                 <div class="content">
+                    <div class="task-header">
+
+                    </div>
                     <div class="tasks-list">
 
                     </div>
@@ -52,11 +79,13 @@
                         <button type="button" class="button-add-task-item">+ Добавить задачу</button>
                     </div>
                     <form action="" class="add-task hidden">
-                        <input type="text" placeholder="Название задачи" name="taskName">
-                        <input type="date" name="expireDate">
+                        <input type="text" placeholder="Название задачи" name="taskName" class="task-name-add">
+                        <br><input type="date" name="expireDate" class="choose-date">
                         <select class="category-list" name="category"></select>
                         <select class="priority-list" name="priority"></select>
-                        <br><button type="button" class="cancel-btn">Отмена</button><button type="submit">Добавить задачу</button>
+                        <div class="buttons-form-add-task">
+                            <button type="button" class="cancel-btn">Отмена</button>
+                            <button type="submit" class="send-task">Добавить задачу</button></div>
                     </form>
                 </div>
             </div>

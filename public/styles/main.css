@@ -57,6 +57,7 @@ body {
 }
 .wrapper .main-content {
   flex: 1 1 auto;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .wrapper .main-content .container {
   display: grid;
@@ -65,20 +66,28 @@ body {
 .wrapper .main-content .container .left-sidebar {
   margin-right: 20px;
 }
-.wrapper .main-content .container .left-sidebar .category-filter .category-filter-head {
-  margin-bottom: 15px;
+.wrapper .main-content .container .left-sidebar .category-filter, .wrapper .main-content .container .left-sidebar .priority-filter, .wrapper .main-content .container .left-sidebar .general-filter {
+  background-color: #eaf1f1;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.wrapper .main-content .container .left-sidebar .category-filter-head, .wrapper .main-content .container .left-sidebar .priority-filter-head {
   font-weight: 700;
+  padding: 10px;
 }
-.wrapper .main-content .container .left-sidebar .category-filter .category-filter-list {
+.wrapper .main-content .container .left-sidebar .category-filter-list, .wrapper .main-content .container .left-sidebar .priority-filter-list, .wrapper .main-content .container .left-sidebar .general-filter-list {
   list-style: none;
+  padding: 10px 0;
 }
-.wrapper .main-content .container .left-sidebar .category-filter .category-filter-list .category-filter-item {
-  padding: 5px 10px;
-}
-.wrapper .main-content .container .left-sidebar .category-filter .category-filter-list .category-filter-item a {
+.wrapper .main-content .container .left-sidebar .category-filter-list .category-filter-item a, .wrapper .main-content .container .left-sidebar .category-filter-list .priority-filter-item a, .wrapper .main-content .container .left-sidebar .category-filter-list .general-filter-item a, .wrapper .main-content .container .left-sidebar .priority-filter-list .category-filter-item a, .wrapper .main-content .container .left-sidebar .priority-filter-list .priority-filter-item a, .wrapper .main-content .container .left-sidebar .priority-filter-list .general-filter-item a, .wrapper .main-content .container .left-sidebar .general-filter-list .category-filter-item a, .wrapper .main-content .container .left-sidebar .general-filter-list .priority-filter-item a, .wrapper .main-content .container .left-sidebar .general-filter-list .general-filter-item a {
   text-decoration: none;
   cursor: pointer;
+  padding: 5px 15px;
   display: block;
+}
+.wrapper .main-content .container .left-sidebar .category-filter-list .category-filter-item a:hover, .wrapper .main-content .container .left-sidebar .category-filter-list .priority-filter-item a:hover, .wrapper .main-content .container .left-sidebar .category-filter-list .general-filter-item a:hover, .wrapper .main-content .container .left-sidebar .priority-filter-list .category-filter-item a:hover, .wrapper .main-content .container .left-sidebar .priority-filter-list .priority-filter-item a:hover, .wrapper .main-content .container .left-sidebar .priority-filter-list .general-filter-item a:hover, .wrapper .main-content .container .left-sidebar .general-filter-list .category-filter-item a:hover, .wrapper .main-content .container .left-sidebar .general-filter-list .priority-filter-item a:hover, .wrapper .main-content .container .left-sidebar .general-filter-list .general-filter-item a:hover {
+  background-color: #d0d0d0;
+  border-radius: 5px;
 }
 .wrapper .main-content .content {
   max-width: 700px;
@@ -129,13 +138,58 @@ body {
 .wrapper .main-content .content .tasks-list .task-item .thrown {
   text-decoration: line-through;
 }
-.wrapper .main-content .content .button-add-task-item {
+.wrapper .main-content .content .button-add-task {
+  display: flex;
+  justify-content: flex-end;
+}
+.wrapper .main-content .content .button-add-task .button-add-task-item {
   padding: 10px 15px;
+  margin-top: 15px;
   border-radius: 10px;
   border: none;
   background-color: #719191;
   color: #ffffff;
   font-weight: 700;
+}
+.wrapper .main-content .content .add-task {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+.wrapper .main-content .content .add-task .task-name-add {
+  width: 100%;
+  outline: none;
+  border: none;
+  margin-bottom: 10px;
+  height: 40px;
+}
+.wrapper .main-content .content .add-task .choose-date {
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+.wrapper .main-content .content .add-task .category-list, .wrapper .main-content .content .add-task .priority-list {
+  height: 30px;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+.wrapper .main-content .content .add-task .buttons-form-add-task {
+  margin-top: 10px;
+}
+.wrapper .main-content .content .add-task .buttons-form-add-task .cancel-btn, .wrapper .main-content .content .add-task .buttons-form-add-task .send-task {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  color: #ffffff;
+  font-weight: 700;
+}
+.wrapper .main-content .content .add-task .buttons-form-add-task .cancel-btn {
+  background-color: #ad2e2e;
+}
+.wrapper .main-content .content .add-task .buttons-form-add-task .send-task {
+  background-color: #719191;
+  margin-left: 10px;
 }
 
 .container {

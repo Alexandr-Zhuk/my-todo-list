@@ -1,12 +1,14 @@
 const taskModel = require('../models/task');
-const moment = require('moment');
+
 
 const addTask = async(data) => {
     await taskModel.create(data);
 };
 
-const getAllTasks = async() => {
-   return await taskModel.find({isDone: false}).populate('category').populate('priority');
+const getAllTasks = async(filter) => {
+    filter.isDone = false;
+    console.log(filter)
+    return await taskModel.find(filter).populate('category').populate('priority');
 };
 
 const updateTask = async(data) => {
