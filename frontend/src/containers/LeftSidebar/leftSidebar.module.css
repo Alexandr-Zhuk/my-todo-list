@@ -1,0 +1,40 @@
+.left_sidebar {
+    margin-right: 20px;
+}
+
+.category_filter,
+.priority_filter, 
+.general_filter {
+    background-color: #eaf1f1;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.category_filter_head, 
+.priority_filter_head {
+    font-weight: 700;
+    padding: 10px;
+}
+
+.category_filter_list, 
+.priority_filter_list, 
+.general_filter_list {
+    list-style: none;
+    padding: 10px 0;
+}
+
+.category_filter_item a, 
+.priority_filter_item a, 
+.general_filter_item a {
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 15px;
+    display: block;
+}
+
+.category_filter_item a:hover, 
+.priority_filter_item a:hover, 
+.general_filter_item a:hover {
+    background-color: #d0d0d0;
+    border-radius: 5px;
+}

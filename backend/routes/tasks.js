@@ -39,6 +39,7 @@ const filtrationGetParams = (getParams) => {
 };
 
 router.get('/list', async(req, res) => {
+    console.log('запрос тастов в роуте',req.query)
     const filteredParams = filtrationGetParams(req.query);
     const taskList = await taskController.getAllTasks(filteredParams);
     res.json(taskList);
@@ -47,13 +48,18 @@ router.get('/list', async(req, res) => {
 router.post('/change', async(req, res) => {
     const data = req.body;
     console.log(data);
-    await taskController.updateTask(data);
-    const taskList = await taskController.getAllTasks();
-    res.json(taskList);
+    const filteredParams = filtrationGetParams(req.query);
+    const fromDB = await taskController.updateTask(data);
+    console.log('с базы приходит после обновления', fromDB._id);
+    if(fromDB._id){
+        res.json({status: 200});
+    }
+    //const taskList = await taskController.getAllTasks(filteredParams);
+    //res.json(taskList);
 });
 
-router.post('/delete', async(req, res) => {
-    const id = req.body.id;
+router.get('/delete/:id', async(req, res) => {
+    const id = req.params.id;
     const filteredParams = filtrationGetParams(req.query);
     await taskController.deleteTask(id);
     const taskList = await taskController.getAllTasks(filteredParams);

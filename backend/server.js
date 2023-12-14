@@ -7,7 +7,7 @@ const server = express();
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/toDoList');
 
-server.listen(3000);
+server.listen(5000);
 
 server.set('view engine', 'ejs');
 server.set('views', __dirname + '/views');

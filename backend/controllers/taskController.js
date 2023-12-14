@@ -14,7 +14,7 @@ const getAllTasks = async(filter) => {
 const updateTask = async(data) => {
     const id = data.id;
     delete data.id;
-    await taskModel.findByIdAndUpdate(id, data);
+    return await taskModel.findByIdAndUpdate(id, data);
 };
 
 const deleteTask = async(id) => {

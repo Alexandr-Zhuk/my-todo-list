@@ -10,11 +10,13 @@ const ajv = new Ajv();
 const pathUp = path.join(__dirname + '/../public/uploads');
 const upload = multer({dest: pathUp});
 
+// /category/list
 router.get('/list', async(req, res) => {
     const categoryList = await categoryController.getAllCategories();
     res.json(categoryList);
 });
 
+// /category/change
 router.post('/change', async(req, res) => {
     const data = req.body;
     console.log(data);
@@ -23,6 +25,7 @@ router.post('/change', async(req, res) => {
     res.json(categoryList);
 });
 
+// /category/delete
 router.post('/delete', async(req, res) => {
     const id = req.body.id;
     await categoryController.deleteCategory(id);
@@ -30,6 +33,7 @@ router.post('/delete', async(req, res) => {
     res.json(categoryList);
 });
 
+// /category/add
 router.get('/add', upload.none(), async(req, res) => {
     //const newCategory = req.body;
     //console.log(newCategory);
