@@ -5,6 +5,7 @@ const path = require('path');
 const router = express.Router();
 const moment = require('moment');
 const taskController = require('../controllers/taskController');
+const secureMV = require('../middlewares/forAuth');
 
 const ajv = new Ajv();
 
@@ -38,41 +39,40 @@ const filtrationGetParams = (getParams) => {
     return getParams;
 };
 
-router.get('/list', async(req, res) => {
+router.get('/list', secureMV, async(req, res) => {
     console.log('запрос тастов в роуте',req.query)
     const filteredParams = filtrationGetParams(req.query);
     const taskList = await taskController.getAllTasks(filteredParams);
     res.json(taskList);
 });
 
-router.post('/change', async(req, res) => {
+router.post('/change', secureMV, async(req, res) => {
     const data = req.body;
     console.log(data);
-    const filteredParams = filtrationGetParams(req.query);
     const fromDB = await taskController.updateTask(data);
     console.log('с базы приходит после обновления', fromDB._id);
     if(fromDB._id){
         res.json({status: 200});
     }
-    //const taskList = await taskController.getAllTasks(filteredParams);
-    //res.json(taskList);
 });
 
-router.get('/delete/:id', async(req, res) => {
+router.get('/delete/:id', secureMV, async(req, res) => {
     const id = req.params.id;
-    const filteredParams = filtrationGetParams(req.query);
-    await taskController.deleteTask(id);
-    const taskList = await taskController.getAllTasks(filteredParams);
-    res.json(taskList);
+    const fromDB = await taskController.deleteTask(id);
+    if(fromDB._id){
+        res.json({status: 200});
+    }
 });
 
-router.post('/add', upload.none(), async(req, res) => {
+router.post('/add', secureMV, upload.none(), async(req, res) => {
     const newTask = req.body;
-    const filteredParams = filtrationGetParams(req.query);
     console.log(newTask);
-    await taskController.addTask(newTask);
-    const taskList = await taskController.getAllTasks(filteredParams);
-    res.json(taskList);
+    const fromDB = await taskController.addTask(newTask);
+    console.log('Получаем после добавления таски из БД', fromDB)
+    if(fromDB._id){
+        res.json({status: 200});
+    }
+    
 });
 
 module.exports = router;

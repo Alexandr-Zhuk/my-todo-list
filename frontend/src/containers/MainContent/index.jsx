@@ -1,13 +1,14 @@
 import styles from './mainContent.module.css';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
+import axios from 'axios';
 import TaskList from '../../components/TaskList';
 import { setTasks } from '../../actions/tasks';
 import AddTaskForm from '../../components/AddTaskForm';
 import { setUrlParams } from '../../actions/tasks';
 import { getTasks } from '../../controllers/taskController';
+import { setAccessToken } from '../../actions/auth';
 
 
 function MainContent(){
@@ -16,44 +17,28 @@ const [isActiveAddForm, setIsActiveAddForm] = useState(false);
 const categories = useSelector((state)=> state.categories.categoryList);
 const priorities = useSelector((state)=> state.priorities.priorityList);
 const urlParams = useSelector((state)=> state.tasks.urlParams)
+const accessToken = useSelector((state) => state.auth.accessToken);
 const [titlePage, setTitlePage] = useState('');
 const params = useParams();
 
-
-/*
-1. получаем данные из урл
-2. записываем эти данные в стейт
-3. при изменении этого стейта запускаем обработчик строки и получение заданий и тайтла
-4.
-
-
-
-
-const getTasks = async() => {
-    const getParams = urlParams;
-    let url = '/tasks/list';
-    function isEmpty(obj) {
-        for (let key in obj) {
-          return false;
-        }
-        return true;
-      }
-    const len = isEmpty(getParams);
-    if(!len){
-        url += `?${getParams.filterName}=${getParams.filterId}`;
-    }
-    const result = await axios.get(url);
-    return result.data;
-   
-    
-};
-
-*/
 const addTaskToRedux = async() => {
-    const result = await getTasks(urlParams);
+    const result = await getTasks(urlParams, accessToken);
+    if(result.status === 401){
+        await updateRefresh();
+        return;
+    }
     setTasks(result, dispatch);
 };
 
+const updateRefresh = async() => {
+    const response = await axios.get('/auth/refresh');
+        if(response.data.status === 401){
+            console.log('У нас с рефреша пришел 401 статус');
+            setAccessToken('', dispatch);
+            return;
+        }
+    setAccessToken(response.data.accessToken, dispatch);
+}
 
 const analizeURL = () => {
     const hrefParts = params;
@@ -125,6 +110,11 @@ const analizeURL = () => {
         }
         
     }, [urlParams]);
+
+    useEffect(() => {
+        addTaskToRedux();
+    }, [accessToken])
+
 
     return (
         <div className={styles.content}>

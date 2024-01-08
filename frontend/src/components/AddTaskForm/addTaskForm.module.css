@@ -73,3 +73,8 @@
     background-color: #719191;
     margin-left: 10px;
 }
+
+.send_task:disabled {
+    background-color: #a6cccc;
+   cursor: auto;
+}

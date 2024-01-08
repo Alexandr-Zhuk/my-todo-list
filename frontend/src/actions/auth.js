@@ -1,6 +1,6 @@
 import {
     SET_ACCESS_TOKEN,
-    SET_GOOGLE_ACCESS_TOKEN
+    //SET_GOOGLE_ACCESS_TOKEN
 } from '../reducers/types';
 
 const actionSetAccessToken = (accessToken) => ({
@@ -13,6 +13,7 @@ const setAccessToken = (accessToken, dispatch) => {
     dispatch(action);
 };
 
+/*
 const actionSetGoogleAccessToken = (accessToken) => ({
     type: SET_GOOGLE_ACCESS_TOKEN,
     payload: { googleAccessToken: accessToken }
@@ -22,5 +23,5 @@ const setGoogleAccessToken = (accessToken, dispatch) => {
     const action = actionSetGoogleAccessToken(accessToken);
     dispatch(action);
 };
-
-export {setAccessToken, setGoogleAccessToken};
+*/
+export {setAccessToken};

@@ -1,13 +1,8 @@
 import styles from './taskList.module.css';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import TaskItem from '../TaskItem'
 
-
-
 function TaskList(){
-
-    
 
     const tasks = useSelector((state) => state.tasks.tasksList);
 

@@ -5,6 +5,7 @@ const path = require('path');
 const router = express.Router();
 const categoryController = require('../controllers/categoryController');
 
+
 const ajv = new Ajv();
 
 const pathUp = path.join(__dirname + '/../public/uploads');
@@ -17,7 +18,7 @@ router.get('/list', async(req, res) => {
 });
 
 // /category/change
-router.post('/change', async(req, res) => {
+router.post('/change',  async(req, res) => {
     const data = req.body;
     console.log(data);
     await categoryController.updateCategory(data);

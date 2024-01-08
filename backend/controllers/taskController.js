@@ -2,7 +2,7 @@ const taskModel = require('../models/task');
 
 
 const addTask = async(data) => {
-    await taskModel.create(data);
+    return await taskModel.create(data);
 };
 
 const getAllTasks = async(filter) => {
@@ -19,7 +19,7 @@ const updateTask = async(data) => {
 
 const deleteTask = async(id) => {
     console.log(id);
-    await taskModel.findByIdAndDelete(id);
+    return await taskModel.findByIdAndDelete(id);
 };
 
 const getByDate = () => {

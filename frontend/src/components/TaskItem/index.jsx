@@ -1,7 +1,6 @@
 import moment from 'moment';
 import axios from 'axios'; 
 import styles from './taskItem.module.css';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTasks } from '../../actions/tasks';
 import { getTasks } from '../../controllers/taskController';
@@ -10,6 +9,7 @@ function TaskItem({ task }){
 
     const dispatch = useDispatch();
     const urlParams = useSelector((state) => state.tasks.urlParams);
+    const accessToken = useSelector((state) => state.auth.accessToken);
     console.log(urlParams);
 
     const doneTask = async(ev, id) => {
@@ -17,9 +17,9 @@ function TaskItem({ task }){
             id: id, 
             isDone: true
         };
-        const result = await axios.post('/tasks/change', data);
+        const result = await axios.post('/tasks/change', data, { headers: {"Authorization" : `Bearer ${accessToken}`}});
         if(result.data.status === 200){
-            const tasks = await getTasks(urlParams);
+            const tasks = await getTasks(urlParams, accessToken);
             console.log('we get data from back', tasks)
             setTasks(tasks, dispatch); 
         }
@@ -27,8 +27,13 @@ function TaskItem({ task }){
     };
 
     const deleteTask = async(id) => {
-        const result = await axios.get('/tasks/delete/' + id);
-        setTasks(result.data, dispatch)
+        const result = await axios.get('/tasks/delete/' + id, { headers: {"Authorization" : `Bearer ${accessToken}`}});
+        console.log(result);
+        if(result.data.status === 200){
+            const tasks = await getTasks(urlParams, accessToken);
+            console.log('we get data from back after delete', tasks)
+            setTasks(tasks, dispatch); 
+        }
     };
 
     return(
@@ -47,7 +52,7 @@ function TaskItem({ task }){
             <div className={styles.task_categ_prior}>
                 {task.expireDate 
                     ? 
-                    <div className={(moment(task.expireDate).format('DD-MM-YYYY') < moment().format('DD-MM-YYYY')) ? `${styles.task_exp_date} ${styles.task_exp_date_exp}` : styles.task_exp_date}>
+                    <div className={(Number(Date.parse(task.expireDate)) < Number(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()))) ? `${styles.task_exp_date} ${styles.task_exp_date_exp}` : styles.task_exp_date}>
                         {moment(task.expireDate).format('DD-MM-YYYY')}
                     </div> 
                     :

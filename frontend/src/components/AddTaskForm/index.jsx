@@ -3,20 +3,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react'
 import styles from './addTaskForm.module.css';
 import { setTasks } from '../../actions/tasks'; 
+import { getTasks } from '../../controllers/taskController';
 
 function AddTaskForm({ closeForm }){
 
     const dispatch = useDispatch();
+    const accessToken = useSelector((state) => state.auth.accessToken)
     const categories = useSelector((state) => state.categories.categoryList);
     const priorities = useSelector((state) => state.priorities.priorityList);
+    const urlParams = useSelector((state) => state.tasks.urlParams);
     const [isLoading, setIsLoading] = useState(false);
+    const [task, setTask] = useState('');
 
     const addTask = async(ev) => {
         ev.preventDefault();
         const formData = new FormData(ev.target);
         setIsLoading(true)
-        const result = await axios.post('/tasks/add', formData);
-        setTasks(result.data, dispatch)
+        const result = await axios.post('/tasks/add', formData, { headers: {"Authorization" : `Bearer ${accessToken}`}});
+        if(result.data.status === 200){
+            const tasks = await getTasks(urlParams, accessToken);
+            console.log('we get data from back after add task', tasks)
+            setTasks(tasks, dispatch); 
+        }
         console.log(result.data);
         setIsLoading(false)
     };
@@ -83,7 +91,7 @@ function AddTaskForm({ closeForm }){
                 </div>
                 :
                 <form action="" className={styles.add_task} onSubmit={addTask}>
-                    <input type="text" placeholder="Название задачи" name="taskName" className={styles.task_name_add}/>
+                    <input type="text" placeholder="Название задачи" name="taskName" value={task} onChange={(ev)=> setTask(ev.target.value)} className={styles.task_name_add}/>
                         <br/><input type="date" name="expireDate" className={styles.choose_date}/>
                         <select className={styles.category_list} name="category">
                             <option disabled selected value="">Выберите категорию</option>
@@ -95,7 +103,7 @@ function AddTaskForm({ closeForm }){
                         </select>
                         <div className={styles.buttons_form_add_task}>
                             <button type="button" className={styles.cancel_btn} onClick={closeForm} >Отмена</button>
-                            <button type="submit" className={styles.send_task}>Добавить задачу</button>
+                            <button type="submit" className={styles.send_task} disabled={task.length > 1 ? false : true}>Добавить задачу</button>
                         </div>
                     
                 </form>
