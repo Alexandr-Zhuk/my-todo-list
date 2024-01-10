@@ -4,6 +4,8 @@ import { useState } from 'react'
 import styles from './addTaskForm.module.css';
 import { setTasks } from '../../actions/tasks'; 
 import { getTasks } from '../../controllers/taskController';
+import { updateRefresh } from '../../controllers/authController';
+import { setAccessToken } from '../../actions/auth';
 
 function AddTaskForm({ closeForm }){
 
@@ -14,18 +16,43 @@ function AddTaskForm({ closeForm }){
     const urlParams = useSelector((state) => state.tasks.urlParams);
     const [isLoading, setIsLoading] = useState(false);
     const [task, setTask] = useState('');
+    
 
+    // function for adding task
     const addTask = async(ev) => {
         ev.preventDefault();
         const formData = new FormData(ev.target);
         setIsLoading(true)
+        console.log('первый аксесс токен отдаем ---- ', accessToken);
         const result = await axios.post('/tasks/add', formData, { headers: {"Authorization" : `Bearer ${accessToken}`}});
+
+        if(result.data.status === 401){
+            const isAccess = await updateRefresh();
+            console.log('что нам приходит в исАксесс после рефреша ---', isAccess)
+            setAccessToken(isAccess, dispatch);
+
+            
+        
+            if(isAccess){
+                const isAddTask = await axios.post('/tasks/add', formData, { headers: {"Authorization" : `Bearer ${isAccess}`}});
+                console.log('Успешно ли добавилась задача', isAddTask)
+
+                const tasks = await getTasks(urlParams, isAccess);
+                console.log('we get data from back after add task', tasks)
+                setTasks(tasks, dispatch); 
+                console.log('Смотрим что получили после обновления аксесс токена ----', result.data)
+            }
+            
+        }
+
         if(result.data.status === 200){
+            console.log('сделали второй раз запрос на добавление и смотри что получили в аксесс токене ---- ', accessToken)
             const tasks = await getTasks(urlParams, accessToken);
             console.log('we get data from back after add task', tasks)
             setTasks(tasks, dispatch); 
         }
         console.log(result.data);
+        setTask('');
         setIsLoading(false)
     };
 

@@ -42,7 +42,9 @@ const filtrationGetParams = (getParams) => {
 router.get('/list', secureMV, async(req, res) => {
     console.log('запрос тастов в роуте',req.query)
     const filteredParams = filtrationGetParams(req.query);
-    const taskList = await taskController.getAllTasks(filteredParams);
+    const headerAuth = req.headers.authorization;
+    const accessToken = headerAuth.split(' ')[1];
+    const taskList = await taskController.getAllTasks(filteredParams, accessToken);
     res.json(taskList);
 });
 
@@ -66,8 +68,10 @@ router.get('/delete/:id', secureMV, async(req, res) => {
 
 router.post('/add', secureMV, upload.none(), async(req, res) => {
     const newTask = req.body;
-    console.log(newTask);
-    const fromDB = await taskController.addTask(newTask);
+    const headerAuth = req.headers.authorization;
+    const accessToken = headerAuth.split(' ')[1];
+    console.log('Получили данные для добавления задачи', newTask);
+    const fromDB = await taskController.addTask(newTask, accessToken);
     console.log('Получаем после добавления таски из БД', fromDB)
     if(fromDB._id){
         res.json({status: 200});

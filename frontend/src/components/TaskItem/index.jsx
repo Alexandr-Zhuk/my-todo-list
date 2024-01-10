@@ -12,6 +12,7 @@ function TaskItem({ task }){
     const accessToken = useSelector((state) => state.auth.accessToken);
     console.log(urlParams);
 
+    // function to make task done
     const doneTask = async(ev, id) => {
         const data = {
             id: id, 
@@ -26,6 +27,7 @@ function TaskItem({ task }){
           
     };
 
+    //function for deleting task
     const deleteTask = async(id) => {
         const result = await axios.get('/tasks/delete/' + id, { headers: {"Authorization" : `Bearer ${accessToken}`}});
         console.log(result);

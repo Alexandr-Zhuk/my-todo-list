@@ -1,12 +1,22 @@
 const taskModel = require('../models/task');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
+
+const getUserId = (accessToken) => {
+    const decoded = jwt.verify(accessToken, config.SECRET_ACCESS_KEY);
+    return decoded.userId;
+}
 
 
-const addTask = async(data) => {
+const addTask = async(data, accessToken) => {
+    data.user = getUserId(accessToken);
+    console.log('Смотрим данные при добавлении задачи --- ', data)
     return await taskModel.create(data);
 };
 
-const getAllTasks = async(filter) => {
+const getAllTasks = async(filter, accessToken) => {
     filter.isDone = false;
+    filter.user = getUserId(accessToken);
     console.log(filter)
     return await taskModel.find(filter).populate('category').populate('priority');
 };

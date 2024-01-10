@@ -9,6 +9,7 @@ import AddTaskForm from '../../components/AddTaskForm';
 import { setUrlParams } from '../../actions/tasks';
 import { getTasks } from '../../controllers/taskController';
 import { setAccessToken } from '../../actions/auth';
+import { updateRefresh } from '../../controllers/authController';
 
 
 function MainContent(){
@@ -24,21 +25,14 @@ const params = useParams();
 const addTaskToRedux = async() => {
     const result = await getTasks(urlParams, accessToken);
     if(result.status === 401){
-        await updateRefresh();
+        const isAccess = await updateRefresh();
+        setAccessToken(isAccess, dispatch);
         return;
     }
     setTasks(result, dispatch);
 };
 
-const updateRefresh = async() => {
-    const response = await axios.get('/auth/refresh');
-        if(response.data.status === 401){
-            console.log('У нас с рефреша пришел 401 статус');
-            setAccessToken('', dispatch);
-            return;
-        }
-    setAccessToken(response.data.accessToken, dispatch);
-}
+
 
 const analizeURL = () => {
     const hrefParts = params;
