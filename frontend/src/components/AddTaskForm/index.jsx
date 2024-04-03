@@ -22,7 +22,8 @@ function AddTaskForm({ closeForm }){
     const addTask = async(ev) => {
         ev.preventDefault();
         const formData = new FormData(ev.target);
-        setIsLoading(true)
+        console.log(formData);
+        setIsLoading(true);
         console.log('первый аксесс токен отдаем ---- ', accessToken);
         const result = await axios.post('/tasks/add', formData, { headers: {"Authorization" : `Bearer ${accessToken}`}});
 
@@ -30,8 +31,6 @@ function AddTaskForm({ closeForm }){
             const isAccess = await updateRefresh();
             console.log('что нам приходит в исАксесс после рефреша ---', isAccess)
             setAccessToken(isAccess, dispatch);
-
-            
         
             if(isAccess){
                 const isAddTask = await axios.post('/tasks/add', formData, { headers: {"Authorization" : `Bearer ${isAccess}`}});
@@ -70,51 +69,51 @@ function AddTaskForm({ closeForm }){
                                 values="1;0;0;0;0;0;0;0" calcMode="linear"
                                 repeatCount="indefinite" />
                         </circle>
-            <circle cx="49.063" cy="27.063" r="5" fillOpacity="0" fill="#ff0000">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;1;0;0;0;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="42.601" cy="42.663" r="5" fillOpacity="0" fill="#ff0000">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;1;0;0;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="27" cy="49.125" r="5" fillOpacity="0" fill="#ff0000">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;1;0;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="11.399" cy="42.663" r="5" fillOpacity="0" fill="#ff0000">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;0;1;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="4.938" cy="27.063" r="5" fillOpacity="0" fill="#ff0000">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;0;0;1;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="11.399" cy="11.462" r="5" fillOpacity="0" fill="#ff0000">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;0;0;0;1;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="27" cy="5" r="5" fillOpacity="0" fill="#ff0000">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;0;0;0;0;1" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-        </g>
-    </g>
-</svg>
+                        <circle cx="49.063" cy="27.063" r="5" fillOpacity="0" fill="#ff0000">
+                            <animate attributeName="fill-opacity"
+                                begin="0s" dur="1.3s"
+                                values="0;1;0;0;0;0;0;0" calcMode="linear"
+                                repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="42.601" cy="42.663" r="5" fillOpacity="0" fill="#ff0000">
+                            <animate attributeName="fill-opacity"
+                                begin="0s" dur="1.3s"
+                                values="0;0;1;0;0;0;0;0" calcMode="linear"
+                                repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="27" cy="49.125" r="5" fillOpacity="0" fill="#ff0000">
+                            <animate attributeName="fill-opacity"
+                                begin="0s" dur="1.3s"
+                                values="0;0;0;1;0;0;0;0" calcMode="linear"
+                                repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="11.399" cy="42.663" r="5" fillOpacity="0" fill="#ff0000">
+                            <animate attributeName="fill-opacity"
+                                begin="0s" dur="1.3s"
+                                values="0;0;0;0;1;0;0;0" calcMode="linear"
+                                repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="4.938" cy="27.063" r="5" fillOpacity="0" fill="#ff0000">
+                            <animate attributeName="fill-opacity"
+                                begin="0s" dur="1.3s"
+                                values="0;0;0;0;0;1;0;0" calcMode="linear"
+                                repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="11.399" cy="11.462" r="5" fillOpacity="0" fill="#ff0000">
+                            <animate attributeName="fill-opacity"
+                                begin="0s" dur="1.3s"
+                                values="0;0;0;0;0;0;1;0" calcMode="linear"
+                                repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="27" cy="5" r="5" fillOpacity="0" fill="#ff0000">
+                            <animate attributeName="fill-opacity"
+                                begin="0s" dur="1.3s"
+                                values="0;0;0;0;0;0;0;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                        </circle>
+                        </g>
+                         </g>
+                    </svg>
                 </div>
                 :
                 <form action="" className={styles.add_task} onSubmit={addTask}>
@@ -132,7 +131,6 @@ function AddTaskForm({ closeForm }){
                             <button type="button" className={styles.cancel_btn} onClick={closeForm} >Отмена</button>
                             <button type="submit" className={styles.send_task} disabled={task.length > 1 ? false : true}>Добавить задачу</button>
                         </div>
-                    
                 </form>
                 
                 }

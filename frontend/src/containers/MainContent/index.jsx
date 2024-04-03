@@ -13,47 +13,48 @@ import { updateRefresh } from '../../controllers/authController';
 
 
 function MainContent(){
-const dispatch = useDispatch();
-const [isActiveAddForm, setIsActiveAddForm] = useState(false);
-const categories = useSelector((state)=> state.categories.categoryList);
-const priorities = useSelector((state)=> state.priorities.priorityList);
-const urlParams = useSelector((state)=> state.tasks.urlParams)
-const accessToken = useSelector((state) => state.auth.accessToken);
-const [titlePage, setTitlePage] = useState('');
-const params = useParams();
 
-const addTaskToRedux = async() => {
-    const result = await getTasks(urlParams, accessToken);
-    if(result.status === 401){
-        const isAccess = await updateRefresh();
-        setAccessToken(isAccess, dispatch);
-        return;
-    }
-    setTasks(result, dispatch);
-};
+    const dispatch = useDispatch();
+    const [isActiveAddForm, setIsActiveAddForm] = useState(false);
+    const categories = useSelector((state)=> state.categories.categoryList);
+    const priorities = useSelector((state)=> state.priorities.priorityList);
+    const urlParams = useSelector((state)=> state.tasks.urlParams)
+    const accessToken = useSelector((state) => state.auth.accessToken);
+    const [titlePage, setTitlePage] = useState('');
+    const params = useParams();
 
-
-
-const analizeURL = () => {
-    const hrefParts = params;
-    let getParams = {};
-    if(hrefParts){
-        
-        if(hrefParts.filter === 'categoryName'){
-            getParams.filterName = 'category';
-            getParams.filterId = hrefParts.id;
-        }else if(hrefParts.filter === 'priority'){
-            getParams.filterName = 'priority';
-            getParams.filterId = hrefParts.id;
-        }else if(hrefParts.filter === 'date'){
-            getParams.filterName = 'date';
-            getParams.filterId = hrefParts.id;
+    const addTaskToRedux = async() => {
+        const result = await getTasks(urlParams, accessToken);
+        if(result.status === 401){
+            const isAccess = await updateRefresh();
+            setAccessToken(isAccess, dispatch);
+            return;
         }
-        
-    }
-    console.log('Происходит анализ УРЛ');
-    setUrlParams(getParams, dispatch);
-} 
+        setTasks(result, dispatch);
+    };
+
+
+
+    const analizeURL = () => {
+        const hrefParts = params;
+        let getParams = {};
+        if(hrefParts){
+            
+            if(hrefParts.filter === 'categoryName'){
+                getParams.filterName = 'category';
+                getParams.filterId = hrefParts.id;
+            }else if(hrefParts.filter === 'priority'){
+                getParams.filterName = 'priority';
+                getParams.filterId = hrefParts.id;
+            }else if(hrefParts.filter === 'date'){
+                getParams.filterName = 'date';
+                getParams.filterId = hrefParts.id;
+            }
+            
+        }
+        console.log('Происходит анализ УРЛ');
+        setUrlParams(getParams, dispatch);
+    } 
 
     const getTitle = () => {
         
@@ -96,18 +97,11 @@ const analizeURL = () => {
     useEffect(()=> {
         addTaskToRedux();
 
-        if(categories.length > 0){
-            getTitle();
-        }
-        if(priorities.length > 0){
+        if(categories.length > 0 || priorities.length > 0){
             getTitle();
         }
         
     }, [urlParams]);
-
-    useEffect(() => {
-        addTaskToRedux();
-    }, [accessToken])
 
 
     return (

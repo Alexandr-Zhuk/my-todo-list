@@ -8,6 +8,9 @@
 .filter_head {
     font-weight: 700;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .filter_list{
@@ -19,14 +22,43 @@
     text-decoration: none;
     cursor: pointer;
     padding: 5px 15px;
-    display: block;
+    display: flex;
+    
+    justify-content: space-between;
+    align-items: center;
 }
 
 .filter_item_current{
     font-weight: 700;
+    background-color: #d0d0d0;
+    border-radius: 5px;
 }
 
 .filter_item a:hover {
     background-color: #d0d0d0;
     border-radius: 5px;
+}
+
+.filter_qty{
+    min-width: 20px;
+    min-height: 20px;
+    border-radius: 50%;
+    background-color: #719191;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.filter_add_category{
+    font-size: 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    color: #719191;
+    font-weight: 700;
+}
+
+.filter_add_category:hover{
+    background-color: #bed6d6;
 }

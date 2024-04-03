@@ -1,8 +1,20 @@
 const categoryModel = require('../models/category');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
 
-const addCategory = async(data) => {
-    console.log(data)
-    await categoryModel.create(data);
+const getUserId = (accessToken) => {
+    const decoded = jwt.verify(accessToken, config.SECRET_ACCESS_KEY);
+    return decoded.userId;
+}
+
+const addCategory = async(data, accessToken) => {
+    
+    data.user = getUserId(accessToken);
+    console.log(data);
+    const isNewCategory = await categoryModel.create(data);
+    if(isNewCategory){
+        return {status: 200};
+    }
 };
 
 const getAllCategories = async() => {

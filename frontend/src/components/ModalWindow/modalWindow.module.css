@@ -1,0 +1,23 @@
+.modal_window_full{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.700);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+   
+}
+
+.modal_window_content{
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+
+}
+
+.hidden{
+    display: none;
+}

@@ -4,6 +4,10 @@
     border-bottom: 1px solid gray;
 }
 
+.task_item:hover{
+    cursor: pointer;
+}
+
 .task_info {
     display: flex;
     justify-content: space-between;

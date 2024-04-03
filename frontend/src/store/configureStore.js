@@ -4,6 +4,7 @@
 
 import { createStore, compose } from 'redux';
 import createReducer from './../reducers';
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 //скопировал с персист стор
 import { persistReducer } from 'redux-persist'
@@ -18,14 +19,14 @@ const persistConfig = {
 }
 
 const configureStore = function configureStore(initialState = {}) {
-  let composeEnhancers = compose;
-
+  //let composeEnhancers = compose;
+  const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
   // If Redux Dev Tools and Saga Dev Tools Extensions are installed, enable them
   /* istanbul ignore next */
-  if (process.env.NODE_ENV !== 'production' && typeof window === 'object') {
+   if (process.env.NODE_ENV !== 'production' && typeof window === 'object') {
     /* eslint-disable no-underscore-dangle */
-    if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
-      composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({});
+    //if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
+      // composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({});
 
     // NOTE: Uncomment the code below to restore support for Redux Saga
     // Dev Tools once it supports redux-saga version 1.x.x
@@ -42,6 +43,7 @@ const configureStore = function configureStore(initialState = {}) {
   const store = createStore(
     persistedReducer,
     initialState,
+    composeWithDevTools()
   );
 
  

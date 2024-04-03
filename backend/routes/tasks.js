@@ -48,7 +48,7 @@ router.get('/list', secureMV, async(req, res) => {
     res.json(taskList);
 });
 
-router.post('/change', secureMV, async(req, res) => {
+router.post('/change', secureMV, upload.none(), async(req, res) => {
     const data = req.body;
     console.log(data);
     const fromDB = await taskController.updateTask(data);
@@ -61,6 +61,7 @@ router.post('/change', secureMV, async(req, res) => {
 router.get('/delete/:id', secureMV, async(req, res) => {
     const id = req.params.id;
     const fromDB = await taskController.deleteTask(id);
+    console.log('delete')
     if(fromDB._id){
         res.json({status: 200});
     }

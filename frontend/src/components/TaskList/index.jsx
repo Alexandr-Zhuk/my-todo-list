@@ -13,10 +13,7 @@ function TaskList(){
                     <TaskItem task={item}/>    
                 )}
             </ul>
-           
-            
-        </div>
-        
+        </div> 
     );
 }
 

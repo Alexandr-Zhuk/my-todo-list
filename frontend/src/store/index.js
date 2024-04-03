@@ -1,5 +1,6 @@
 import { configureStore } from './configureStore';
-import { persistStore } from 'redux-persist'
+import { persistStore } from 'redux-persist';
+
 
 const initialState = {};
 const store = configureStore(initialState);

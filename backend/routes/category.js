@@ -35,13 +35,16 @@ router.post('/delete', async(req, res) => {
 });
 
 // /category/add
-router.get('/add', upload.none(), async(req, res) => {
-    //const newCategory = req.body;
-    //console.log(newCategory);
-    const newCategory = {categoryName: 'Education'};
-    await categoryController.addCategory(newCategory);
-    const categoryList = await categoryController.getAllCategories();
-    res.json(categoryList);
+router.post('/add', upload.none(), async(req, res) => {
+    const newCategory = req.body;
+    const authorization = req.headers.authorization;
+    const accessToken = authorization.split(' ')[1];
+
+    console.log(newCategory);
+    console.log(accessToken);
+    const result = await categoryController.addCategory(newCategory, accessToken);
+    //const categoryList = await categoryController.getAllCategories();
+    res.json(result);
 });
 
 

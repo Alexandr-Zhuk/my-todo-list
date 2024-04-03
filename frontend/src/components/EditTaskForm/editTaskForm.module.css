@@ -1,0 +1,80 @@
+
+.button_add_task {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button_add_task_item {
+    padding: 10px 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: none;
+    background-color: #719191;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.add_task {
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.task_name_add {
+    width: 100%;
+    outline: none;
+    border: none;
+    margin-bottom: 10px;
+    height: 40px;
+}
+
+.choose_date {
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.category_list, 
+.priority_list {
+    height: 30px;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.buttons_form_add_task {
+    margin-top: 10px;
+}
+
+.cancel_btn, 
+.send_task {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: ease 0.3s;
+}
+.cancel_btn {
+    background-color: #ad2e2e;
+}
+
+.send_task:hover{
+    background-color: #8fb6b6;
+}
+
+.cancel_btn:hover {
+    background-color: #a05d5d;
+}
+
+.send_task {
+    background-color: #719191;
+    margin-left: 10px;
+}
+
+.send_task:disabled {
+    background-color: #a6cccc;
+   cursor: auto;
+}
